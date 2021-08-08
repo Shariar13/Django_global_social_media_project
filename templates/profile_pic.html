@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Profile Picture</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/CSS/all.CSS' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <style>
+        .status_scroll {
+            overflow: scroll;
+        }
+
+       .nav-item>a:hover {
+
+      border-bottom: 5px solid white;
+      
+    }
+        .footer-class>ul>li{
+          display: inline;
+          color: rgb(129, 129, 129);
+          margin: 30px;
+    }
+    @media screen and (max-width: 479px){
+         .title{
+        font-size:20px;
+      }
+    }
+    </style>
+
+
+
+
+</head>
+
+
+<body>
+
+    <!-- navbar -->
+    {% if user.is_authenticated %}
+    <nav style="position: sticky;top: 0;width: 100%;"class="navbar navbar-expand-lg navbar-light bg-light">
+        <div style="background-color: #80bd9e;" class="container-fluid">
+            <a style="color: white;background-color: #80bd9e;font-size: 29px;border-radius: 5px;" class="navbar-brand"
+                href="/"><span class="title">Qriosity</span></a>
+            {% comment %} search {% endcomment %}
+
+            <form method="get" action="/search">
+                <input style="background-color: white;border: #80bd9e;border-radius: 11px;width: 199px;"
+                    class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search"
+                    id="search">
+
+
+            </form>
+
+
+            {% comment %} search {% endcomment %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span style="color: white;" class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                    <li class="nav-item">
+                        <a style="color: white; margin-left: 100px;" class="nav-link active" aria-current="true"
+                            href="/"><i class="fas fa-home fa-2x"></i> Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'feed' %}"><i
+                                class="fas fa-rss fa-2x"></i>
+                            Feed</a>
+                    </li>
+                    <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="http://127.0.0.1:8000/chat"><i class="fas fa-envelope fa-2x"></i> Chatroom</a>
+          </li>
+                    <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'notification' %}"><i
+                class="fas fa-bell fa-2x"></i> Notification</a>
+          </li>
+                    {% comment %} <li class="nav-item">
+                        <a style="color: black;margin-left: 100px;border-bottom:5px solid black;"
+                            class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user fa-2x"></i> Profile</a>
+                    </li> {% endcomment %}
+                    <li class="nav-items">
+                        <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'profile' %}">
+                            <img style="border-radius:50%;" src="{{ user.profilepic.profile_pic.url }}" width="30" height="30"> 
+                            {{user.get_full_name }}</a>
+                    </li>
+                    <!-- dropdown -->
+                    <div class="btn-group">
+                        <button style="border: #80bd9e;background-color: #80bd9e;margin-bottom:10px;" type="button"
+                            class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a href="{% url 'signout' %}" class="dropdown-item" type="button">Sign out</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- dropdown -->
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+    <!-- navbar close -->
+
+
+ <div style="text-align: center;">
+    <p style="font-size: 29px;color: #80bd9e;margin-top: 29px;">Upload profile picture</p>
+ </div>
+    <div
+        style="width: 81%;height: 300px;border: 1px solid #80bd9e;margin: auto;border-radius: 11px;margin-top: 70px;text-align: center;">
+        
+        <div style="text-align: center;margin-top: 100px;">
+        Note : Hey wait!You can upload your profile picture only one time.For the security purpose.If you want to change again then you can request<a style="text-decoration:none;color:#80bd9e"href=""> here.</a>
+        <br>
+        <br>
+        <form action="{% url 'profile_pic_change' %}"method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ user.username }}">
+            <input type="file" name="myfile" accept="image/*" style="background-color: #80bd9e;color: white;border-radius: 11px;margin-right: 10px;">
+            <br>
+            <br>
+            <button style="background-color: #80bd9e;color: white;border-radius: 2px;margin-right: 10px;width: 100px;border-radius: 11px;border: #80bd9e;"type="submit">Upload</button>
+        </form>
+    </div>
+    </div>
+
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+</body>
+<footer>
+  <hr>
+  <br>
+  <div style="text-align: center;"class="footer-class">
+    <ul>
+      <li>
+        <a>Jobs</a>
+      </li>
+      <li>
+        <a>Help</a>
+      </li>
+      <li>
+        <a>Find US</a>
+      </li>
+      <li>
+        <a>Support</a>
+      </li>
+      <li>
+        <a>Faq</a>
+      </li>
+      <br>
+      <li>
+        <a><small><p>Qriocity.com &copy 2021</p></small></a>
+      </li>
+    </ul>
+   
+          
+  </div>
+</footer>
+
+</html>

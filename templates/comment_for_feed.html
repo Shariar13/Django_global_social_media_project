@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment</title>
+  <link rel="stylesheet" href="{% static 'fontawesome/CSS/all.CSS' %}">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+  <style>
+    .nav-item>a:hover {
+
+      border-bottom: 5px solid white;
+
+    }
+
+    .footer-class>ul>li {
+      display: inline;
+      color: rgb(129, 129, 129);
+      margin: 30px;
+    }
+
+    .status-frame {
+      height: auto;
+      width: 70%;
+      margin: auto;
+    }
+
+    .reply-form {
+      width: 100%;
+      margin-top: 0px;
+      height: 50px;
+      border-radius: 11px;
+      border: 1px solid rgb(129, 129, 129);
+    }
+
+    .reply-form-border {
+      margin: auto;
+      width: 90%;
+      height: auto;
+      margin-top: 29px;
+      text-align: center;
+    }
+
+    .reply-form-frame {
+      width: 70%;
+      height: auto;
+      margin: auto;
+    }
+
+    .comment-frame {
+      width: 70%;
+      border: 1px solid rgb(199, 199, 199);
+      margin: auto;
+      height: auto;
+      text-align: center;
+      border-radius: 11px;
+    }
+
+    .comment-area {
+      width: 90%;
+      height: auto;
+      border: 1px solid rgb(199, 199, 199);
+      height: 100px;
+      margin: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: left;
+      border-radius: 11px;
+    }
+
+    .comment-scroll-bar {
+      width: 70%;
+      margin: auto;
+      height: 500px;
+      overflow: scroll;
+      text-align: center;
+    }
+
+
+
+
+    /* Responsive */
+    @media screen and (max-width: 900px) {
+      .status-frame {
+        height: auto;
+        width: 100%;
+        margin: auto;
+      }
+
+      .reply-form {
+        width: 100%;
+        margin-top: 0px;
+        height: 50px;
+        border-radius: 11px;
+        border: 1px solid rgb(129, 129, 129);
+      }
+
+      .reply-form-border {
+        margin: auto;
+        width: 100%;
+        height: auto;
+        margin-top: 29px;
+        text-align: center;
+      }
+
+      .reply-form-frame {
+        width: 90%;
+        height: auto;
+        margin: auto;
+      }
+
+      .comment-frame {
+        width: 100%;
+        border: 1px solid rgb(199, 199, 199);
+        margin: auto;
+        height: auto;
+        text-align: center;
+        border-radius: 11px;
+      }
+
+      .comment-area {
+        width: 90%;
+        height: auto;
+        border: 1px solid rgb(199, 199, 199);
+        height: 100px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: left;
+        border-radius: 11px;
+      }
+
+      .comment-scroll-bar {
+        width: 90%;
+        margin: auto;
+        height: 500px;
+        overflow: scroll;
+        text-align: center;
+      }
+      .title{
+        font-size:20px;
+      }
+
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  {% if user.is_authenticated %}
+  <nav style="position: sticky;top: 0;width: 100%;" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div style="background-color: #80bd9e;" class="container-fluid">
+      <a style="color: white;background-color: #80bd9e;font-size: 29px;border-radius: 5px;" class="navbar-brand"
+        href="/"><span class="title">Qriocity</span></a>
+      {% comment %} search {% endcomment %}
+
+      <form method="get" action="/search">
+        <input style="background-color: white;border: #80bd9e;border-radius: 11px;width: 199px;"
+          class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+
+
+      </form>
+
+
+      {% comment %} search {% endcomment %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span style="color: white;" class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link active" aria-current="true" href="/"><i
+                class="fas fa-home fa-2x"></i>
+              Home</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: black;margin-left: 100px;border-bottom:5px solid black;" class="nav-link"
+              href="{% url 'feed' %}"><i class="fas fa-rss fa-2x"></i>
+              Feed</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="http://127.0.0.1:8000/chat"><i class="fas fa-envelope fa-2x"></i> Chatroom</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'notification' %}"><i
+                class="fas fa-bell fa-2x"></i> Notification</a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'profile' %}"><i
+                class="fas fa-user fa-2x"></i> Profile</a>
+          </li> {% endcomment %}
+
+          <li class="nav-items">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'profile' %}">
+              <img style="border-radius:50%;" src="{{ user.profilepic.profile_pic.url }}" width="30" height="30">
+              {{user.get_full_name }}</a>
+          </li>
+          <!-- dropdown -->
+          <div class="btn-group">
+            <button style="border: #80bd9e;background-color: #80bd9e;margin-bottom:10px;" type="button"
+              class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a href="{% url 'signout' %}" class="dropdown-item" type="button">Sign out</a></li>
+            </ul>
+          </div>
+
+          <!-- dropdown -->
+
+
+        </ul>
+
+      </div>
+    </div>
+    </div>
+  </nav>
+
+
+
+
+
+  <div class="status-frame">
+    <div style="border:1px solid rgb(199, 199, 199);width:90%;border-radius:5px;margin:auto;margin-top: 29px;">
+
+      <div style="text-align:left;">
+        <p style="color:white;background-color: #80bd9e;" class="card-header">
+          <b>Qriocity.com</b><small><span style="float:right;">
+              {{ feed.date }}</span></small>
+        </p>
+
+
+
+        <p style="color:black;margin:20px;">{{ feed.feed }}</p>
+
+      </div>
+      <hr style="color: black;">
+      <div>
+        {% csrf_token %}
+
+      </div>
+      <br>
+    </div>
+    <br>
+    <hr style="width: 90%;color: black;margin: auto;">
+  </div>
+  <div class="reply-form-frame">
+    <div class="reply-form-border">
+      <form action="{% url 'comment_form' %}" method="post" role="form">
+        {% csrf_token %}
+        <div style="margin-top:0px;text-align:center;width:80%;margin:auto;">
+          <input value="{{ post.author_name }}" name="post_author_name" type="hidden">
+          <input value="{{ user.get_full_name }}" name="commenter_name" type="hidden">
+          <input value="{{ user.username }}" name="commenter_username" type="hidden">
+          <input value="{{ feed.id }}" name="id" type="hidden">
+          <input class="reply-form" type="text" name="comment_name" id="status_name" placeholder="Reply a answare">
+        </div>
+        <div style="text-align:center;">
+          <button type="submit"
+            style="height:29px;color:white;background-color:#80bd9e;border-radius:20px;margin-top:20px;width:90px;border:#80bd9e;">Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div style="width: 70%;margin: auto;">
+    <div style="width: 70%;margin: auto;text-align: center;">
+      <br>
+
+      <p style="font-size: 29px;color: #80bd9e;"><b>Comments</b></p>
+
+    </div>
+  </div>
+  <div class="comment-scroll-bar">
+
+    <div class="comment-frame">
+
+
+      {% for comment in comment_list %}
+      {% if feed.id == comment.comment_id %}
+
+
+
+
+
+      <div class="comment-area">
+        <p class="card-header">{{ comment.commenter_name }} <small><span
+              style="float: right;">{{comment.comment_date}}</span></small></p>
+
+
+        <p style="margin-left: 10px;">{{ comment.comment }}
+        <a style="text-decoration: none;"href="{% url 'delete_comment' comment.pk %}"><span
+            style="height:29px;color:#80bd9e;background-color:white;border-radius:20px;margin-top:20px;width:90px;border:#80bd9e;"> Delete</span></a></p>
+
+      </div>
+      {% endif %}
+
+      {% endfor %}
+    </div>
+
+  </div>
+
+
+
+  {% endif %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+</body>
+<footer>
+  <hr>
+  <br>
+  <div style="text-align: center;" class="footer-class">
+    <ul>
+      <li>
+        <a>Jobs</a>
+      </li>
+      <li>
+        <a>Help</a>
+      </li>
+      <li>
+        <a>Find US</a>
+      </li>
+      <li>
+        <a>Support</a>
+      </li>
+      <li>
+        <a>Faq</a>
+      </li>
+      <br>
+      <li>
+        <a><small>
+            <p>Qriocity.com &copy 2021</p>
+          </small></a>
+      </li>
+    </ul>
+
+
+  </div>
+</footer>
+
+</html>

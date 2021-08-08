@@ -1,0 +1,555 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'fontawesome/CSS/all.CSS' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+
+
+  <style>
+    .nav-item>a:hover {
+
+      border-bottom: 5px solid white;
+    }
+
+
+    .footer-class>ul>li {
+      display: inline;
+      color: rgb(129, 129, 129);
+      margin: 30px;
+    }
+
+
+    .ad-section {
+      float: left;
+      width: 300px;
+      overflow: scroll;
+      height: 700px;
+      margin-left: 20px;
+      position: fixed;
+
+    }
+
+    .ad-section-right-side {
+      float: right;
+      width: 300px;
+      position: fixed;
+      right: 0px;
+      height: 700px;
+      overflow: scroll;
+    }
+
+
+    body {
+      scrollbar-width: none;
+      scrollbar-color: white white;
+    }
+
+    .status-box {
+      border: 1px solid rgb(199, 199, 199);
+      width: 50%;
+      border-radius: 5px;
+      margin: auto;
+      margin-top: 29px;
+      background-color: white;
+    }
+    .filter-button{
+      text-decoration: none;
+      color: black;
+      margin: 10px;
+    }
+    .shortcut-section {
+      float: left;
+      width: 300px;
+      overflow: scroll;
+      height: 700px;
+      margin-left: 20px;
+      position: fixed;
+
+    }
+    .shortcut-section>a{
+      color: black;
+      text-decoration: none;
+    }
+    .shortcut-section-right>a{
+      color: black;
+      text-decoration: none;
+    }
+
+    .shortcut-section-right {
+      float: right;
+      width: 300px;
+      position: fixed;
+      right: 0px;
+      height: 700px;
+      overflow: scroll;
+    }
+
+
+
+    /* Responsive */
+    @media screen and (max-width: 479px) {
+      .shortcut-section {
+        float: left;
+        width: 300px;
+        overflow: scroll;
+        height: 1000px;
+        border: 1px solid black;
+        margin-left: 20px;
+        display: none;
+
+      }
+
+      .shortcut-section-right {
+        float: right;
+        width: 300px;
+        position: fixed;
+        right: 0px;
+        height: 700px;
+        overflow: scroll;
+        display: none;
+      }
+
+      .post-box {
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+        background-color: white;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+        -moz-box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+        box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+      }
+
+      .status-box {
+        border: 1px solid rgb(199, 199, 199);
+        width: 99%;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 29px;
+        background-color: white;
+      }
+       .nav-item{
+        display: -webkit-inline-box;
+        
+      }
+       .title{
+        font-size:20px;
+      }
+      
+
+
+    }
+    /* Responsive */
+    @media screen and (max-width: 900px) {
+      .shortcut-section {
+        float: left;
+        width: 300px;
+        overflow: scroll;
+        height: 1000px;
+        border: 1px solid black;
+        margin-left: 20px;
+        display: none;
+
+      }
+
+      .shortcut-section-right {
+        float: right;
+        width: 300px;
+        position: fixed;
+        right: 0px;
+        height: 700px;
+        overflow: scroll;
+        display: none;
+      }
+
+      .post-box {
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+        background-color: white;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+        -moz-box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+        box-shadow: 0px 0px 2px 1px rgba(158, 158, 158, 1);
+      }
+
+      .status-box {
+        border: 1px solid rgb(199, 199, 199);
+        width: 99%;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 29px;
+        background-color: white;
+      }
+       .nav-item{
+        display: -webkit-inline-box;
+        
+      }
+       .title{
+        font-size:20px;
+      }
+      
+
+
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+
+  <!-- navbar -->
+  {% if user.is_authenticated %}
+  <nav style="position: sticky;top: 0;width: 100%;"style="position: sticky;top: 0;width: 100%;" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div style="background-color: #80bd9e;" class="container-fluid">
+      <a style="color: white;background-color: #80bd9e;font-size: 29px;border-radius: 5px;" class="navbar-brand"
+        href="/"><span class="title">Qriocity</span></a>
+      {% comment %} search {% endcomment %}
+
+      <form method="get" action="/search">
+        <input style="background-color: white;border: #80bd9e;border-radius: 11px;width: 199px;"
+          class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+
+
+      </form>
+
+
+      {% comment %} search {% endcomment %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span style="color: white;" class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;"
+              class="nav-link active" aria-current="true" href="/"><i class="fas fa-home fa-2x"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: black;margin-left: 100px;border-bottom:5px solid black;" class="nav-link" href="{% url 'feed' %}"><i
+                class="fas fa-rss fa-2x"></i>
+              Feed</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="http://127.0.0.1:8000/chat"><i class="fas fa-envelope fa-2x"></i> Chatroom</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'notification' %}"><i
+                class="fas fa-bell fa-2x"></i> Notification</a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a style="color: white; margin-left: 100px;" class="nav-link" href="{% url 'profile' %}"><i
+                class="fas fa-user fa-2x"></i> Profile</a>
+          </li> {% endcomment %}
+
+          <li style="float: right;" class="nav-items">
+            <a style="color: white; margin-left:100px;" class="nav-link" href="{% url 'profile' %}">
+              <img style="border-radius:50%;" src="{{ user.profilepic.profile_pic.url }}" width="30" height="30"> 
+              {{user.get_full_name }}</a>
+          </li>
+          <!-- dropdown -->
+          <div class="btn-group">
+            <button style="border: #80bd9e;background-color: #80bd9e;margin-bottom:10px;" type="button"
+              class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a href="{% url 'signout' %}" class="dropdown-item" type="button">Sign out</a></li>
+            </ul>
+          </div>
+
+          <!-- dropdown -->
+
+
+          {% endif %}
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  <!-- navbar close -->
+
+
+
+
+  {% if user.is_authenticated %}
+
+   <!-- ad section -->
+
+  <div class="shortcut-section">
+    <p style="font-size: 29px;font-family: Arial;color: rgb(114, 114, 114);">Shortcuts</p>
+    <hr>
+    <a href="/"><p style="margin-left: 29px;">Home</p></a>
+    <a href="{% url 'feed' %}"><p style="margin-left: 29px;">Feed</p></a>
+    <a href="http://127.0.0.1:8000/chat/"><p style="margin-left: 29px;">Chatroom</p></a>
+    <a href="{% url 'notification' %}"><p style="margin-left: 29px;">Notification</p></a>
+    <a href="{% url 'profile' %}"><p style="margin-left: 29px;">Profile</p></a>
+    <a href="{% url 'feedback' %}"><p style="margin-left: 29px;">Feedback</p></a>
+    <hr>
+    <a href="{% url 'buy_me_a_coffee' %}">Buy me a Coffee?<span style="color:#80bd9e"> Click here</span></a>
+    <hr>
+    <a><p >Ad center</p></a>
+    <a href=""><p style="margin-left: 29px;">Show your Ad</p></a>
+    <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header">Ad</div>
+      <div class="card-body">
+        <h5 class="card-title">Ad title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+          content.</p>
+      </div>
+    </div>
+    <hr>
+    <a ><p >About</p></a>
+    <a href="{% url 'contact' %}"><p style="margin-left: 29px;">Contact</p></a>
+    <a href=""><p style="margin-left: 29px;">Faq</p></a>
+    <a href="{% url 'about' %}"><p style="margin-left: 29px;">About</p></a>
+    <hr>
+    <a href="{% url 'feedback' %}"><p >Feedback</p></a>
+
+  </div>
+
+
+  <!-- ad section -->
+
+  <div class="shortcut-section-right">
+    <p style="font-size: 29px;font-family: Arial;color: rgb(114, 114, 114);">Top user</p>
+    <hr>
+    <a href=""><p >Top weekly post</p></a>
+    {% for post in object_list|slice:":15"%}
+    {% if post.author_name != user.get_full_name %}
+    {% for profile_picture in profile_picture_list %}
+      {% if profile_picture.profile_picture_user == post.post_author %}
+    <a href="{% url 'post_profile' post.pk %}"><p style="margin-left: 29px;"><img style="border-radius:50%;" src="{{ profile_picture.user_profile_picture.url }}" width="30" height="30">  {{ post.author_name }}</p></a>
+    {% endif %}
+{% endfor %}
+    {% endif %}
+    {% endfor %}
+    
+    <hr>
+    <a href="{% url 'buy_me_a_coffee' %}">Buy me a Coffee?<span style="color:#80bd9e"> Click here</span></a>
+    <hr>
+    <a><p >Ad center</p></a>
+    <a href=""><p style="margin-left: 29px;">Show your Ad</p></a>
+    <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header">Ad</div>
+      <div class="card-body">
+        <h5 class="card-title">Ad title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+          content.</p>
+      </div>
+    </div>
+    <hr>
+    <a><p >About</p></a>
+    <a href="{% url 'contact' %}"><p style="margin-left: 29px;">Contact</p></a>
+    <a href=""><p style="margin-left: 29px;">Faq</p></a>
+    <a href="{% url 'about' %}"><p style="margin-left: 29px;">About</p></a>
+    <hr>
+    <a href="{% url 'feedback' %}"><p >Feedback</p></a>
+  </div>
+
+
+
+  <!-- feed div -->
+  <div style="background-color: white;" class="body-style">
+
+    <div style="background-color: white;border:none;width:100%;" class="status-body">
+        <div style="text-align: center;">
+
+            <!-- <div>
+            <br>
+                <form>
+                    <select class="event-type-select">
+                        <option value="all">Filter all</option>
+                        <option value="music">News</option>
+                        <option value="food">Study</option>
+                        <option value="art">Schoolership</option>
+                        <option value="fashion">English language</option>
+                        <option value="sport">Sports</option>
+                        <option value="history">Find Job</option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div> -->
+
+
+            <select id="mySelect" onchange="myFunction()">
+              <option value="All">Filter all</option>
+              <option value="Study">Study</option>
+              <option value="News">News</option>
+              <option value="Schoolership">Schoolership</option>
+              <option value="English">English</option>
+              <option value="Sports">Sports</option>
+              <option value="Job">Find job</option>
+            </select>
+
+            <br>
+            <br>
+
+
+            <p id="demo"style="color : black;"></p>
+
+
+
+
+     
+      {% for feed in object_list %}
+
+      <div class="status-box">
+        <div style="text-align:left;">
+          <p style="color:white;background-color: #80bd9e;" class="card-header"><a
+              style="color:white;background-color: #80bd9e;text-decoration: none;"
+              href="{% url 'feed' %}"><b>Qriosity.com</b></a>
+            <small>
+              <span style="margin-right: 10px;float: right;">
+                {{ feed.date }}</span></small>
+          </p>
+
+          <p style="color:black;margin:20px;">{{ feed.feed|safe|truncatewords:"80" }} <a
+              style="text-decoration: none;color: #80bd9e;" href="{% url 'comments_for_feed' feed.pk %}">Continue</a></p>
+
+        </div>
+        <hr style="color: black;">
+        <div>
+          {% csrf_token %}
+          <a href="{% url 'report' %}"><button
+              style="margin-bottom:10px;width: 30%;height:29px;border:black;border-radius:11px;background-color: #f3f3f3 ; color: black;">Report</button></a>
+          <a href="{% url 'comments_for_feed' feed.pk %}"><button
+              style="margin-bottom:10px;margin-left:10px;margin-right:10px;width: 30%;height:29px;border:black;border-radius:11px;background-color: #f3f3f3 ; color: black;">Comment</button></a>
+          {% if user.username == post.author_name %}
+          <a href="{% url 'edit' post.pk %}"><button
+              style="margin-bottom:10px;width: 30%;height:29px;border:black;border-radius:11px;background-color: #f3f3f3 ; color: black;">Edit</button></a>
+          {% else %}
+          <a href="#"><button
+              style="margin-bottom:10px;width: 30%;height:29px;border:black;border-radius:11px;background-color: #f3f3f3 ; color: black;">Share</button></a>
+          {% endif %}
+        </div>
+
+      </div>
+  
+      <br>
+      {% endfor %}
+      
+
+
+
+
+      <br>
+      <br>
+
+
+
+
+
+
+
+
+    </div>
+
+  </div>
+  </div>
+
+
+
+
+
+  {% else %}
+
+  <div class="container my-5">
+    <div class="card text-center">
+      <div style="background-color: white;color: #80bd9e;" class="card-header">
+        Welcome
+      </div>
+      <div class="card-body">
+        <br>
+        <br>
+        <br>
+        <h5 class="card-title">Share Your Knowledge With Each Other</h5>
+        <p class="card-text">Nobody became poor by sharing knowledge</p>
+        <br>
+        <br>
+        <a href="{% url 'signin' %}" style="background-color: #80bd9e;color: white;" class="btn btn-primary">Signin or
+          Signup</a>
+        <br>
+        <br>
+        <br>
+      </div>
+
+      <div style="background-color: white;color: #80bd9e;" class="card-footer text-muted">
+
+        <footer style="color: #80bd9e;">Confuse? Post Your Question & Get Your Answare</footer>
+      </div>
+    </div>
+  </div>
+
+
+  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+  <script src="{% static 'homepage.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("mySelect").value;
+        document.getElementById("demo").innerHTML = "Category : " + x + "<br><br>Category may not work in your browser properly";
+      }
+      </script>
+    
+
+</body>
+<footer>
+  <hr style="color:black;width:60%;margin:auto;">
+  <br>
+  <div style="text-align: center;" class="footer-class">
+    <ul>
+      <li>
+        <a>Jobs</a>
+      </li>
+      <li>
+        <a>Help</a>
+      </li>
+      <li>
+        <a>Find US</a>
+      </li>
+      <li>
+        <a>Support</a>
+      </li>
+      <li>
+        <a>Faq</a>
+      </li>
+      <br>
+      <li>
+        <a><small>
+            <p>Qriocity.com &copy 2021</p>
+          </small></a>
+      </li>
+    </ul>
+
+
+  </div>
+</footer>
+
+</html>
