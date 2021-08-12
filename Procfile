@@ -1,2 +1,2 @@
 
-web: gunicorn helpme.asgi
+web: gunicorn helpme.wsgi
