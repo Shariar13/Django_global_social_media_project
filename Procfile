@@ -1,2 +1,2 @@
 
-web: daphne helpme.asgi:application
+web: gunicorn helpme.asgi
